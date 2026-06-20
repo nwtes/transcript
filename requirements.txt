@@ -3,3 +3,4 @@ djangorestframework
 psycopg[binary]
 python-decouple
 gunicorn
+djangorestframework-simplejwt
