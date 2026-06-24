@@ -4,7 +4,7 @@ from rest_framework.generics import RetrieveAPIView, ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from .tasks import process_video
 from .models import ProcessingJob
 from .serializers import JobSerializer, VideoUploadSerializer
 
@@ -30,8 +30,8 @@ class UploadVideoView(APIView):
             status="pending"
         )
 
-        # Later:
-        # process_video.delay(job.id)
+
+        process_video.delay(job.id)
 
         return Response({
             "video_id": video.id,

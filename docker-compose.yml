@@ -21,6 +21,7 @@ services:
       - db
     env_file:
       - .env
-
+  redis:
+    image: redis:7
 volumes:
   postgres_data:
