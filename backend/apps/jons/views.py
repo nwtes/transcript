@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.generics import RetrieveAPIView, ListAPIView
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -17,7 +18,7 @@ from .serializers import JobSerializer, VideoUploadSerializer
 
 class UploadVideoView(APIView):
     permission_classes = [IsAuthenticated]
-
+    parser_classes = [MultiPartParser, FormParser]
     def post(self, request):
         serializer = VideoUploadSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -30,9 +31,9 @@ class UploadVideoView(APIView):
             status="pending"
         )
 
-
+        print("1")
         process_video.delay(job.id)
-
+        print("2")
         return Response({
             "video_id": video.id,
             "job_id": job.id,

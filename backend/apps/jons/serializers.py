@@ -9,6 +9,7 @@ ALLOWED_EXTENSIONS = [".mp4", ".mov", ".mkv", ".avi"]
 
 
 class VideoUploadSerializer(serializers.ModelSerializer):
+    video_file = serializers.FileField()
     class Meta:
         model = Video
         fields = ["id", "video_file", "title"]

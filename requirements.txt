@@ -4,3 +4,6 @@ psycopg[binary]
 python-decouple
 gunicorn
 djangorestframework-simplejwt
+celery
+redis
+django_redis
