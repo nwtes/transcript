@@ -15,21 +15,32 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/app
+      - media_data:/app/media
     ports:
       - "8000:8000"
     depends_on:
       - db
+      - redis
     env_file:
       - .env
+
   redis:
     image: redis:7
+    ports:
+      - "6379:6379"
+
   celery:
     build: .
     command: celery -A config worker -l info
     depends_on:
       - redis
-      - backend
+      - db
     env_file:
       - .env
+    volumes:
+      - ./backend:/app
+      - media_data:/app/media
+
 volumes:
   postgres_data:
+  media_data:
